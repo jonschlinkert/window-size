@@ -12,8 +12,8 @@ npm i window-size --save
 
 ```javascript
 var size = require('window-size');
-size.height; // "80" (rows)
-size.width; // "25" (columns)
+size.height; // "25" (rows)
+size.width; // "80" (columns)
 ```
 
 ## Author
