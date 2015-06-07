@@ -1,7 +1,7 @@
 {
   "name": "window-size",
   "description": "Reliable way to to get the height and width of the terminal/console in a node.js environment.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/jonschlinkert/window-size",
   "author": {
     "name": "Jon Schlinkert",
@@ -14,20 +14,22 @@
   "bugs": {
     "url": "https://github.com/jonschlinkert/window-size/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/jonschlinkert/window-size/blob/master/LICENSE-MIT"
-    }
+  "license": "MIT",
+  "files": [
+    "index.js"
   ],
   "main": "index.js",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "keywords": [
-    "window",
     "console",
+    "height",
+    "resize",
+    "size",
     "terminal",
-    "tty"
+    "tty",
+    "width",
+    "window"
   ]
 }
