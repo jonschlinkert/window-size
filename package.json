@@ -11,12 +11,14 @@
     "type": "git",
     "url": "https://github.com/jonschlinkert/window-size.git"
   },
+  "bin": "cli.js",
   "bugs": {
     "url": "https://github.com/jonschlinkert/window-size/issues"
   },
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "cli.js"
   ],
   "main": "index.js",
   "engines": {

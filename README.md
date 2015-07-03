@@ -18,6 +18,14 @@ size.height; // "25" (rows)
 size.width; // "80" (columns)
 ```
 
+## CLI
+
+```shell
+$ window-size
+  height: 40
+  width : 145
+```
+
 ## Other projects
 
 * [assemble](http://assemble.io): Static site generator for Grunt.js, Yeoman and Node.js. Used by Zurb Foundation, Zurb Ink, H5BP/Effeckt,… [more](http://assemble.io)
