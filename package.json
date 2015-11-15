@@ -8,7 +8,7 @@
     "url": "https://github.com/jonschlinkert"
   },
   "scripts": {
-    "//pretest": "semistandard",
+    "pretest": "semistandard",
     "test": "tap --coverage test.js"
   },
   "repository": {
