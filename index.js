@@ -1,3 +1,5 @@
+'use strict';
+
 /*!
  * window-size <https://github.com/jonschlinkert/window-size>
  *
@@ -5,7 +7,7 @@
  * Licensed under the MIT license.
  */
 
-const tty = require('tty');
+var tty = require('tty');
 
 module.exports = (function() {
   var width;
