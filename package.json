@@ -7,6 +7,10 @@
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
   },
+  "scripts": {
+    "pretest": "semistandard",
+    "test": "tap --coverage test.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/jonschlinkert/window-size.git"
@@ -33,5 +37,9 @@
     "tty",
     "width",
     "window"
-  ]
+  ],
+  "devDependencies": {
+    "semistandard": "^7.0.2",
+    "tap": "^2.2.1"
+  }
 }
