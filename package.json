@@ -1,7 +1,7 @@
 {
   "name": "window-size",
   "description": "Reliable way to to get the height and width of the terminal/console in a node.js environment.",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "homepage": "https://github.com/jonschlinkert/window-size",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/window-size",
