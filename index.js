@@ -25,7 +25,7 @@ module.exports = (function () {
       width = process.stdout.columns;
     }
   } else {
-    Error('window-size could not get size with tty or process.stdout.');
+    throw Error('window-size could not get size with tty or process.stdout.');
   }
 
   return {height: height, width: width};
