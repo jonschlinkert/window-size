@@ -8,6 +8,8 @@
  */
 
 var tty = require('tty');
+var os  = require('os');
+var execSync = require('child_process').execSync;
 
 module.exports = (function () {
   var width;
@@ -24,8 +26,14 @@ module.exports = (function () {
       height = process.stdout.rows;
       width = process.stdout.columns;
     }
+  } else if (os.release().startsWith('10')) {
+    var numberPattern = /\d+/g;
+    var cmd   = 'wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution';
+    var code  = execSync(cmd).toString('utf8');
+    var res   = code.match( numberPattern );
+    return { height: ~~res[1], width: ~~res[0] };
   } else {
-    Error('window-size could not get size with tty or process.stdout.');
+    return { height: undefined, width: undefined };
   }
 
   return {height: height, width: width};
