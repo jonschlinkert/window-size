@@ -15,7 +15,7 @@ module.exports = (function () {
   var width;
   var height;
 
-  if (tty.isatty(1) && tty.isatty(2)) {
+  if (tty.isatty(1)) {
     if (process.stdout.getWindowSize) {
       width = process.stdout.getWindowSize(1)[0];
       height = process.stdout.getWindowSize(1)[1];
