@@ -8,14 +8,14 @@
  */
 
 var tty = require('tty');
-var os  = require('os');
+var os = require('os');
 var execSync = require('child_process').execSync;
 
 module.exports = (function () {
   var width;
   var height;
 
-  if (tty.isatty(1) && tty.isatty(2)) {
+  if (tty.isatty(1)) {
     if (process.stdout.getWindowSize) {
       width = process.stdout.getWindowSize(1)[0];
       height = process.stdout.getWindowSize(1)[1];
@@ -28,9 +28,9 @@ module.exports = (function () {
     }
   } else if (os.release().startsWith('10')) {
     var numberPattern = /\d+/g;
-    var cmd   = 'wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution';
-    var code  = execSync(cmd).toString('utf8');
-    var res   = code.match( numberPattern );
+    var cmd = 'wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution';
+    var code = execSync(cmd).toString('utf8');
+    var res = code.match(numberPattern);
     return { height: ~~res[1], width: ~~res[0] };
   } else {
     return { height: undefined, width: undefined };
