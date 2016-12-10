@@ -1,13 +1,15 @@
 #!/usr/bin/env node
-'use strict';
-var helpText = ['Usage',
-'  $ window-size',
-'',
-'Example',
-'  $ window-size',
-'  height: 40 ',
-'  width : 145',
-''].join('\n');
+
+var helpText = [
+  'Usage',
+  '  $ window-size',
+  '',
+  'Example',
+  '  $ window-size',
+  '  height: 40 ',
+  '  width : 145',
+  ''
+].join('\n');
 
 function showSize () {
   var size = require('./');
@@ -22,8 +24,9 @@ if (process.argv.length > 2) {
     case '-h':
       console.log(helpText);
       break;
-    default:
+    default: {
       showSize();
+    }
   }
 } else {
   showSize();

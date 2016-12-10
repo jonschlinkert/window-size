@@ -1,5 +1,3 @@
-'use strict';
-
 /*!
  * window-size <https://github.com/jonschlinkert/window-size>
  *
@@ -7,26 +5,44 @@
  * Licensed under the MIT license.
  */
 
-var tty = require('tty');
+'use strict';
 
-module.exports = (function () {
-  var width;
-  var height;
+var extend = require('extend-shallow');
+var DEFAULT_WIDTH = 78;
 
-  if (tty.isatty(1) && tty.isatty(2)) {
-    if (process.stdout.getWindowSize) {
-      width = process.stdout.getWindowSize(1)[0];
-      height = process.stdout.getWindowSize(1)[1];
-    } else if (tty.getWindowSize) {
-      width = tty.getWindowSize()[1];
-      height = tty.getWindowSize()[0];
-    } else if (process.stdout.columns && process.stdout.rows) {
-      height = process.stdout.rows;
-      width = process.stdout.columns;
-    }
-  } else {
-    Error('window-size could not get size with tty or process.stdout.');
+function windowSize(options) {
+  var opts = extend({ width: DEFAULT_WIDTH, height: 0 }, options);
+  var stdout = opts.stdout || process.stdout;
+  var tty = opts.tty || require('tty');
+
+  if (typeof stdout.getWindowSize === 'function') {
+    return {
+      height: stdout.getWindowSize(1)[1],
+      width: stdout.getWindowSize(1)[0]
+    };
   }
 
-  return {height: height, width: width};
-})();
+  if (typeof tty.getWindowSize === 'function') {
+    return {
+      height: tty.getWindowSize()[1],
+      width: tty.getWindowSize()[0]
+    };
+  }
+
+  return {
+    width: stdout.columns || opts.width,
+    height: stdout.rows || opts.height
+  };
+}
+
+/**
+ * Expose `create` method
+ */
+
+windowSize.create = windowSize;
+
+/**
+ * Expose window-size using our defaults
+ */
+
+module.exports = windowSize();

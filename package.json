@@ -10,10 +10,11 @@
   },
   "license": "MIT",
   "files": [
-    "index.js",
-    "cli.js"
+    "cli.js",
+    "index.js"
   ],
   "main": "index.js",
+  "bin": "cli.js",
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -21,7 +22,9 @@
     "pretest": "semistandard",
     "test": "tap --coverage test.js"
   },
-  "bin": "cli.js",
+  "dependencies": {
+    "extend-shallow": "^2.0.1"
+  },
   "devDependencies": {
     "semistandard": "^7.0.2",
     "tap": "^2.2.1"
@@ -39,9 +42,9 @@
   "verb": {
     "related": {
       "list": [
-        "yargs",
+        "base-cli",
         "lint-deps",
-        "base-cli"
+        "yargs"
       ]
     }
   }
