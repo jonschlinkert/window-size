@@ -8,10 +8,9 @@
 'use strict';
 
 var extend = require('extend-shallow');
-var DEFAULT_WIDTH = 78;
 
 function windowSize(options) {
-  var opts = extend({ width: DEFAULT_WIDTH, height: 0 }, options);
+  var opts = extend({ width: 78, height: 0 }, options);
   var stdout = opts.stdout || process.stdout;
   var tty = opts.tty || require('tty');
 
