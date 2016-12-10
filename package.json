@@ -4,27 +4,33 @@
   "version": "0.2.0",
   "homepage": "https://github.com/jonschlinkert/window-size",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "contributors": [
+    "Benjamin E. Coe <ben@npmjs.com> (https://twitter.com/benjamincoe)",
+    "Carlos Hernández Gómez (https://github.com/karliky)",
+    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)",
+    "Siddharth Kannan <kannan.siddharth12@gmail.com> (http://www.icyflame.me)"
+  ],
   "repository": "jonschlinkert/window-size",
   "bugs": {
     "url": "https://github.com/jonschlinkert/window-size/issues"
   },
   "license": "MIT",
   "files": [
-    "index.js",
-    "cli.js"
+    "cli.js",
+    "index.js"
   ],
   "main": "index.js",
+  "bin": "cli.js",
   "engines": {
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "pretest": "semistandard",
     "test": "tap --coverage test.js"
   },
-  "bin": "cli.js",
   "devDependencies": {
-    "semistandard": "^7.0.2",
-    "tap": "^2.2.1"
+    "gulp-format-md": "^0.1.11",
+    "semistandard": "^9.2.1",
+    "tap": "^8.0.1"
   },
   "keywords": [
     "console",
@@ -39,10 +45,25 @@
   "verb": {
     "related": {
       "list": [
-        "yargs",
+        "base-cli",
         "lint-deps",
-        "base-cli"
+        "yargs"
       ]
-    }
+    },
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "lint": {
+      "reflinks": true
+    },
+    "reflinks": [
+      "verb",
+      "verb-generate-readme"
+    ]
   }
 }
