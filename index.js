@@ -1,40 +1,134 @@
-'use strict';
-
 /*!
  * window-size <https://github.com/jonschlinkert/window-size>
  *
- * Copyright (c) 2014-2015 Jon Schlinkert
- * Licensed under the MIT license.
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
  */
 
-var tty = require('tty');
+'use strict';
+
 var os = require('os');
-var execSync = require('child_process').execSync;
+var isNumber = require('is-number');
+var define = require('define-property');
+var cp = require('child_process');
 
-module.exports = (function () {
-  var width;
-  var height;
+function windowSize(options) {
+  options = options || {};
+  return streamSize(options, 'stdout') ||
+    streamSize(options, 'stderr') ||
+    envSize() ||
+    ttySize(options);
+}
 
-  if (tty.isatty(1)) {
-    if (process.stdout.getWindowSize) {
-      width = process.stdout.getWindowSize(1)[0];
-      height = process.stdout.getWindowSize(1)[1];
-    } else if (tty.getWindowSize) {
-      width = tty.getWindowSize()[1];
-      height = tty.getWindowSize()[0];
-    } else if (process.stdout.columns && process.stdout.rows) {
-      height = process.stdout.rows;
-      width = process.stdout.columns;
+function streamSize(options, name) {
+  var stream = (process && process[name]) || options[name];
+  var size;
+
+  if (!stream) return;
+  if (typeof stream.getWindowSize === 'function') {
+    size = stream.getWindowSize();
+    if (isSize(size)) {
+      return {
+        width: size[0],
+        height: size[1],
+        type: name
+      };
     }
-  } else if (os.release().startsWith('10')) {
-    var numberPattern = /\d+/g;
-    var cmd = 'wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution';
-    var code = execSync(cmd).toString('utf8');
-    var res = code.match(numberPattern);
-    return { height: ~~res[1], width: ~~res[0] };
-  } else {
-    return { height: undefined, width: undefined };
   }
 
-  return {height: height, width: width};
-})();
+  size = [stream.columns, stream.rows];
+  if (isSize(size)) {
+    return {
+      width: Number(size[0]),
+      height: Number(size[1]),
+      type: name
+    };
+  }
+}
+
+function envSize() {
+  if (process && process.env) {
+    var size = [process.env.COLUMNS, process.env.ROWS];
+    if (isSize(size)) {
+      return {
+        width: Number(size[0]),
+        height: Number(size[1]),
+        type: 'process.env'
+      };
+    }
+  }
+}
+
+function ttySize(options, stdout) {
+  var tty = options.tty || require('tty');
+  if (tty && typeof tty.getWindowSize === 'function') {
+    var size = tty.getWindowSize(stdout);
+    if (isSize(size)) {
+      return {
+        width: Number(size[1]),
+        height: Number(size[0]),
+        type: 'tty'
+      };
+    }
+  }
+}
+
+function winSize() {
+  if (os.release().startsWith('10')) {
+    var cmd = 'wmic path Win32_VideoController get CurrentHorizontalResolution,CurrentVerticalResolution';
+    var numberPattern = /\d+/g;
+    var code = cp.execSync(cmd).toString();
+    var size = code.match(numberPattern);
+    if (isSize(size)) {
+      return {
+        width: Number(size[0]),
+        height: Number(size[1]),
+        type: 'windows'
+      };
+    }
+  }
+}
+
+function tputSize() {
+  try {
+    var buf = cp.execSync('tput cols && tput lines');
+    var size = buf.toString().trim().split('\n');
+    if (isSize(size)) {
+      return {
+        width: Number(size[0]),
+        height: Number(size[1]),
+        type: 'tput'
+      };
+    }
+  } catch (err) {}
+}
+
+/**
+ * Returns true if the given size array has
+ * valid height and width values.
+ */
+
+function isSize(size) {
+  return Array.isArray(size) && isNumber(size[0]) && isNumber(size[1]);
+}
+
+/**
+ * Expose `windowSize`
+ */
+
+module.exports = windowSize();
+
+/**
+ * Expose `windowSize.get` method
+ */
+
+define(module.exports, 'get', windowSize);
+
+/**
+ * Expose methods for unit tests
+ */
+
+define(module.exports, 'env', envSize);
+define(module.exports, 'tty', ttySize);
+define(module.exports, 'tput', tputSize);
+define(module.exports, 'win', winSize);

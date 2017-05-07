@@ -1,14 +1,15 @@
 {
   "name": "window-size",
-  "description": "Reliable way to to get the height and width of the terminal/console in a node.js environment.",
-  "version": "0.3.0",
+  "description": "Reliable way to get the height and width of terminal/console, since it's not calculated or updated the same way on all platforms, environments and node.js versions.",
+  "version": "0.2.0",
   "homepage": "https://github.com/jonschlinkert/window-size",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "contributors": [
-    "Benjamin E. Coe <ben@npmjs.com> (https://twitter.com/benjamincoe)",
-    "Carlos Hernández Gómez (https://github.com/karliky)",
-    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)",
-    "Siddharth Kannan <kannan.siddharth12@gmail.com> (http://www.icyflame.me)"
+    "Benjamin E. Coe (https://twitter.com/benjamincoe)",
+    "Carlos Hernández Gómez (http://www.twitter.com/k4rliky)",
+    "Jannis Redmann (http://jannisr.de)",
+    "Jon Schlinkert (http://twitter.com/jonschlinkert)",
+    "Siddharth Kannan (http://icyflame.github.io)"
   ],
   "repository": "jonschlinkert/window-size",
   "bugs": {
@@ -24,23 +25,34 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "scripts": {
-    "test": "tap --coverage test.js"
+  "dependencies": {
+    "define-property": "^1.0.0",
+    "is-number": "^3.0.0"
   },
   "devDependencies": {
-    "gulp-format-md": "^0.1.11",
-    "semistandard": "^9.2.1",
-    "tap": "^8.0.1"
+    "gulp-format-md": "^0.1.12",
+    "justified": "^0.2.1",
+    "mocha": "^3.3.0"
   },
   "keywords": [
+    "columns",
     "console",
+    "darwin",
     "height",
+    "lines",
+    "redirected",
     "resize",
+    "rows",
     "size",
+    "term",
+    "term-size",
     "terminal",
     "tty",
+    "unix",
     "width",
-    "window"
+    "win",
+    "window",
+    "windows"
   ],
   "verb": {
     "related": {
@@ -60,10 +72,6 @@
     ],
     "lint": {
       "reflinks": true
-    },
-    "reflinks": [
-      "verb",
-      "verb-generate-readme"
-    ]
+    }
   }
 }
