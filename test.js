@@ -32,68 +32,76 @@ describe('window-size', function() {
   });
 
   it('should expose a `.get` method to get up-to-date size', function() {
-    var s = size.get();
     if (!process.env.APPVEYOR) {
+      var s = size.get();
       assert.equal(typeof s.width, 'number');
       assert.equal(typeof s.height, 'number');
     }
   });
 
   it('should get size from process.stdout', function() {
-    var count = 0;
-    var restore = override(process.stdout);
-    process.stdout.getWindowSize = function() {
-      count++;
-    };
+    if (!process.env.APPVEYOR) {
+      var count = 0;
+      var restore = override(process.stdout);
+      process.stdout.getWindowSize = function() {
+        count++;
+      };
 
-    size.get();
-    restore();
-    assert.equal(count, 1);
+      size.get();
+      restore();
+      assert.equal(count, 1);
+    }
   });
 
   it('should get size from process.stderr', function() {
-    var restoreOut = override(process.stdout);
-    var restoreErr = override(process.stderr);
+    if (!process.env.APPVEYOR) {
+      var restoreOut = override(process.stdout);
+      var restoreErr = override(process.stderr);
 
-    var count = 0;
-    process.stderr.getWindowSize = function() {
-      count++;
-    };
+      var count = 0;
+      process.stderr.getWindowSize = function() {
+        count++;
+      };
 
-    size.get();
-    restoreOut();
-    restoreErr();
-    assert.equal(count, 1);
+      size.get();
+      restoreOut();
+      restoreErr();
+      assert.equal(count, 1);
+    }
   });
 
   it('should get size from process.env', function() {
-    process.env.COLUMNS = 80;
-    process.env.ROWS = 25;
+    if (!process.env.APPVEYOR) {
+      process.env.COLUMNS = 80;
+      process.env.ROWS = 25;
 
-    var s = size.env();
-    assert(s);
-    assert.equal(s.width, 80);
-    assert.equal(s.height, 25);
+      var s = size.env();
+      assert(s);
+      assert.equal(s.width, 80);
+      assert.equal(s.height, 25);
 
-    process.env.COLUMNS = null;
-    process.env.ROWS = null;
+      process.env.COLUMNS = null;
+      process.env.ROWS = null;
+    }
   });
 
   it('should get size from tty', function() {
-    var restoreOut = override(process.stdout);
-    var restoreErr = override(process.stderr);
-    var restoreTty = override(tty);
+    if (!process.env.APPVEYOR) {
+      var restoreOut = override(process.stdout);
+      var restoreErr = override(process.stderr);
+      var restoreTty = override(tty);
 
-    var count = 0;
-    tty.getWindowSize = function() {
-      count++;
-    };
+      var count = 0;
+      tty.getWindowSize = function() {
+        count++;
+      };
 
-    size.get();
-    restoreOut();
-    restoreErr();
-    restoreTty();
-    assert.equal(count, 1);
+      size.get();
+      restoreOut();
+      restoreErr();
+      restoreTty();
+      assert.equal(count, 1);
+    }
   });
 
   it('should get size from tput', function() {
