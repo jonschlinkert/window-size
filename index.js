@@ -118,17 +118,20 @@ function isSize(size) {
 
 module.exports = windowSize();
 
-/**
- * Expose `windowSize.get` method
- */
+if (module.exports) {
+  /**
+   * Expose `windowSize.get` method
+   */
 
-define(module.exports, 'get', windowSize);
+  define(module.exports, 'get', windowSize);
 
-/**
- * Expose methods for unit tests
- */
+  /**
+   * Expose methods for unit tests
+   */
 
-define(module.exports, 'env', envSize);
-define(module.exports, 'tty', ttySize);
-define(module.exports, 'tput', tputSize);
-define(module.exports, 'win', winSize);
+  define(module.exports, 'env', envSize);
+  define(module.exports, 'tty', ttySize);
+  define(module.exports, 'tput', tputSize);
+  define(module.exports, 'win', winSize);
+}
+
