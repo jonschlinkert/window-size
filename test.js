@@ -116,8 +116,12 @@ describe('window-size', function() {
   describe('utils', function() {
     it('should expose a `.get` method to get up-to-date size', function() {
       var s = utils.get();
-      assert.equal(typeof s.width, 'number');
-      assert.equal(typeof s.height, 'number');
+      if (process.env.APPVEYOR) {
+        assert.equal(typeof s, 'undefined');
+      } else {
+        assert.equal(typeof s.width, 'number');
+        assert.equal(typeof s.height, 'number');
+      }
     });
 
     it('should get size from process.env', function() {
