@@ -9,7 +9,6 @@
 
 var os = require('os');
 var isNumber = require('is-number');
-var define = require('define-property');
 var cp = require('child_process');
 
 function windowSize(options) {
