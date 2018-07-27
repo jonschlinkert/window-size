@@ -90,7 +90,7 @@ function winSize() {
 
 function tputSize() {
   try {
-    var buf = cp.execSync('tput cols && tput lines');
+    var buf = cp.execSync('tput cols && tput lines', {stdio: ['ignore', 'pipe', process.stderr]});
     var size = buf.toString().trim().split('\n');
     if (isSize(size)) {
       return {
