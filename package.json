@@ -31,8 +31,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "define-property": "^1.0.0",
-    "is-number": "^3.0.0"
+    "define-property": "^1.0.0"
   },
   "devDependencies": {
     "gulp-format-md": "^0.1.12",

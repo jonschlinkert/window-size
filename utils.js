@@ -8,7 +8,7 @@
 'use strict';
 
 var os = require('os');
-var isNumber = require('is-number');
+var isNumber = (n) => (typeof n === "number" && n - n === 0) || (typeof n === "string" && Number.isFinite(+n) && n.trim() !== "");
 var cp = require('child_process');
 
 function windowSize(options) {
