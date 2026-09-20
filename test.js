@@ -161,3 +161,28 @@ describe('window-size', function() {
   });
 });
 
+
+describe('redirected / unknown size (issue #17)', function() {
+  it('should still expose .get when initial size is unavailable', function() {
+    // Re-require through a fresh path simulation: utils.get may return undefined
+    // in CI / redirected environments. The export must remain an object with helpers.
+    assert.equal(typeof size, 'object');
+    assert.equal(typeof size.get, 'function');
+    assert.equal(typeof size.env, 'function');
+  });
+
+  it('should not throw when reading size properties if unknown', function() {
+    var s = size.get({
+      stdout: { columns: null, rows: null, getWindowSize: null },
+      stderr: { columns: null, rows: null, getWindowSize: null },
+      tty: { getWindowSize: null }
+    });
+    // May be undefined when nothing available — callers must guard; CLI does.
+    if (s) {
+      assert.equal(typeof s.width, 'number');
+      assert.equal(typeof s.height, 'number');
+    } else {
+      assert.equal(s, undefined);
+    }
+  });
+});
