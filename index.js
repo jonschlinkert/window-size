@@ -12,24 +12,26 @@ var utils = require('./utils');
 
 /**
  * Expose `windowSize`
+ *
+ * When the terminal size cannot be determined (for example when stdout is
+ * redirected), `utils.get()` returns `undefined`. Always export an object so
+ * callers and the CLI can still use `.get()` / helpers without throwing.
  */
 
-module.exports = utils.get();
+var size = utils.get();
+module.exports = size || {};
 
-if (module.exports) {
-  /**
-   * Expose `windowSize.get` method
-   */
+/**
+ * Expose `windowSize.get` method
+ */
 
-  define(module.exports, 'get', utils.get);
+define(module.exports, 'get', utils.get);
 
-  /**
-   * Expose methods for unit tests
-   */
+/**
+ * Expose methods for unit tests
+ */
 
-  define(module.exports, 'env', utils.env);
-  define(module.exports, 'tty', utils.tty);
-  define(module.exports, 'tput', utils.tput);
-  define(module.exports, 'win', utils.win);
-}
-
+define(module.exports, 'env', utils.env);
+define(module.exports, 'tty', utils.tty);
+define(module.exports, 'tput', utils.tput);
+define(module.exports, 'win', utils.win);
